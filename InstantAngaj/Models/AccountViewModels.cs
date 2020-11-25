@@ -99,6 +99,15 @@ namespace InstantAngaj.Models
         [Display(Name = "Numar de telefon")]
         public string PhoneNumber { get; set; }
 
+        [Display(Name = "Oras")]
+        public int CityId { get; set; }
+
+        [Display(Name = "Domeniul")]
+        public int DomainId { get; set; }
+
+        [Display(Name = "Ultima competenta")]
+        public int DegreeId { get; set; }
+
         //
         [Display(Name = "Numele angajatorului")]
         public string EmployerName { get; set; }

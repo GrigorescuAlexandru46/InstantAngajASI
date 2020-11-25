@@ -13,7 +13,16 @@
             @foreach (var job in ViewBag.JobList)
             {
                 <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
-                    <h4 class="list-group-item-heading">@job.Name</h4>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="col-md-12">
+                                <h2 class="list-group-item-heading"><b>@job.Name</b></h2>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h4 class="text-center text-success"><b>Nr candidati: </b><span class="text-warning">@job.Candidates.Count</span></h4>
+                        </div>
+                    </div>
                 </a>
             }
         </div>

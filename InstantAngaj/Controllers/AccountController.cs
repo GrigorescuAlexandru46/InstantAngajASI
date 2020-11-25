@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InstantAngaj.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace InstantAngaj.Controllers
 {
@@ -18,6 +19,7 @@ namespace InstantAngaj.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -140,6 +142,10 @@ namespace InstantAngaj.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.AllCities = GetAllCities();
+            ViewBag.AllDomains = GetAllDomains();
+            ViewBag.AllDegrees = GetAllDegrees();
+
             return View();
         }
 
@@ -152,8 +158,6 @@ namespace InstantAngaj.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationDbContext db = new ApplicationDbContext();
-
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
                 string role = "";
@@ -166,6 +170,9 @@ namespace InstantAngaj.Controllers
                     candidate.LastName = model.LastName;
                     candidate.BirthDate = model.BirthDate;
                     candidate.PhoneNumber = model.PhoneNumber;
+                    candidate.CityId = model.CityId;
+                    candidate.DomainId = model.DomainId;
+                    candidate.DegreeId = model.DegreeId;
 
                     role = "Candidate";
 
@@ -198,6 +205,66 @@ namespace InstantAngaj.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllCities()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var cities = from city in db.Cities
+                         select city;
+
+            foreach (var city in cities)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = city.CityId.ToString(),
+                    Text = city.Name.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllDomains()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var domains = from domain in db.Domains
+                          select domain;
+
+            foreach (var domain in domains)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = domain.DomainId.ToString(),
+                    Text = domain.Name.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllDegrees()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var degrees = from degree in db.Degrees
+                          select degree;
+
+            foreach (var degree in degrees)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = degree.DegreeId.ToString(),
+                    Text = degree.Name.ToString()
+                });
+            }
+
+            return selectList;
         }
 
         //

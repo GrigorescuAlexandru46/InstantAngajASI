@@ -12,6 +12,10 @@
         else if (selectTag.value === "employer") {
             document.getElementById("UserCandidateForm").style.display = "none";
             document.getElementById("UserEmployerForm").style.display = "block";
+
+            document.getElementById("CityId").value = 1;
+            document.getElementById("DomainId").value = 1;
+            document.getElementById("DegreeId").value = 1;
         }
         else {
             console.log("An error has occured while attempting to get the value of UserType select")
@@ -81,6 +85,24 @@
             @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-12" })
             <div class="col-md-12">
                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.CityId, new { @class = "col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(m => m.CityId, new SelectList(ViewBag.AllCities, "Value", "Text"), "Selectati orasul", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.DomainId, new { @class = "col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(m => m.DomainId, new SelectList(ViewBag.AllDomains, "Value", "Text"), "Selectati domeniul", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.DegreeId, new { @class = "col-md-12" })
+            <div class="col-md-12">
+                @Html.DropDownListFor(m => m.DegreeId, new SelectList(ViewBag.AllDegrees, "Value", "Text"), "Selectati competenta", new { @class = "form-control" })
             </div>
         </div>
     </div>

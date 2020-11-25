@@ -40,20 +40,92 @@ namespace InstantAngaj.Controllers
 
         public ActionResult ShowAll()
         {
-            var jobList = (from job in db.Jobs
-                           select job
-                          ).ToList();
+            Candidate candidate = GetCandidate();
 
+            var allJobList = (from job in db.Jobs
+                              select job
+                             ).ToList();
+
+            List<Job> recommendedJobList = new List<Job>();
+            List<Job> remainingJobList = new List<Job>();
+            foreach (Job job in allJobList)
+            {
+                if (job.CityId == candidate.CityId && job.DomainId == candidate.DomainId && job.DegreeId == candidate.DegreeId)
+                {
+                    recommendedJobList.Add(job);
+                }
+                else
+                {
+                    remainingJobList.Add(job);
+                }
+            }
 
             Dictionary<Job, bool> candidateJobApplications = new Dictionary<Job, bool>();
+            foreach (Job job in allJobList)
+            {
+                candidateJobApplications.Add(job, CandidateHasAppliedForJob(candidate.CandidateId, job.JobId));
+            }
+
+            ViewBag.AllJobList = allJobList;
+            ViewBag.RecommendedJobList = recommendedJobList;
+            ViewBag.RemainingJobList = remainingJobList;
+            ViewBag.CandidateJobApplications = candidateJobApplications;
+
+            ViewBag.AllCities = GetAllCities();
+            ViewBag.AllDomains = GetAllDomains();
+            ViewBag.AllDegrees = GetAllDegrees();
+
+            return View();
+        }
+
+        public ActionResult ShowCandidates(int id)
+        {
+            Job job = db.Jobs.Find(id);
+
+            ViewBag.CandidateList = job.Candidates;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(FormCollection form)
+        {
+            ViewBag.Test = form;
+
+            TempData["CityId"] = form["SearchCity"];
+            TempData["DomainId"] = form["SearchDomain"];
+            TempData["DegreeId"] = form["SearchDegree"];
+            return RedirectToAction("Results", "Job");
+        }
+
+        public ActionResult Results()
+        {
+            var jobList = (from job in db.Jobs
+                           select job
+                           ).ToList();
+
+            City searchCity = (string)TempData["CityId"] != "" ? db.Cities.Find(ConvertStringToInt((string)TempData["CityId"])) : null;
+            Domain searchDomain = (string)TempData["DomainId"] != "" ? db.Domains.Find(ConvertStringToInt((string)TempData["DomainId"])) : null;
+            Degree searchDegree = (string)TempData["DegreeId"] != "" ? db.Degrees.Find(ConvertStringToInt((string)TempData["DegreeId"])) : null;
+
+            jobList.RemoveAll(job => (searchCity != null && job.CityId != searchCity.CityId)
+                                        || (searchDomain != null && job.DomainId != searchDomain.DomainId)
+                                        || (searchDegree != null && job.DegreeId != searchDegree.DegreeId)
+                             );
+
             Candidate candidate = GetCandidate();
+            Dictionary<Job, bool> candidateJobApplications = new Dictionary<Job, bool>();
             foreach (Job job in jobList)
             {
                 candidateJobApplications.Add(job, CandidateHasAppliedForJob(candidate.CandidateId, job.JobId));
             }
 
-            ViewBag.JobList = jobList;
             ViewBag.CandidateJobApplications = candidateJobApplications;
+            ViewBag.JobList = jobList;
+
+            ViewBag.SearchCity = searchCity;
+            ViewBag.SearchDomain = searchDomain;
+            ViewBag.SearchDegree = searchDegree;
 
             return View();
         }
@@ -63,6 +135,8 @@ namespace InstantAngaj.Controllers
             Job job = new Job();
 
             job.AllCities = GetAllCities();
+            job.AllDomains = GetAllDomains();
+            job.AllDegrees = GetAllDegrees();
 
             return View(job);
         }
@@ -186,6 +260,46 @@ namespace InstantAngaj.Controllers
         }
 
         [NonAction]
+        public IEnumerable<SelectListItem> GetAllDomains()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var domains = from domain in db.Domains
+                          select domain;
+
+            foreach (var domain in domains)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = domain.DomainId.ToString(),
+                    Text = domain.Name.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllDegrees()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var degrees = from degree in db.Degrees
+                          select degree;
+
+            foreach (var degree in degrees)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = degree.DegreeId.ToString(),
+                    Text = degree.Name.ToString()
+                });
+            }
+
+            return selectList;
+        }
+
+        [NonAction]
         public bool CandidateHasAppliedForJob(int candidateId, int jobId)
         {
             Candidate candidate = db.Candidates.Find(candidateId);
@@ -197,6 +311,20 @@ namespace InstantAngaj.Controllers
             }
 
             return false;
+        }
+
+        [NonAction]
+        public int ConvertStringToInt(string s)
+        {
+            try
+            {
+                return Int32.Parse(s);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return -1;
+            }
         }
     }
 }

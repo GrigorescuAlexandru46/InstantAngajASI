@@ -52,6 +52,8 @@ namespace InstantAngaj
         private void createInitialDatabaseData()
         {
             createCities();
+            createDomains();
+            createDegrees();
         }
 
         private void createCities()
@@ -122,6 +124,112 @@ namespace InstantAngaj
                 {
                     CityId = 10,
                     Name = "Craiova"
+                });
+
+                db.SaveChanges();
+            }
+        }
+
+        private void createDomains()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var domainList = (from domain in db.Domains
+                              select domain
+                             ).ToList();
+
+            if (domainList.Count == 0)
+            {
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 1,
+                    Name = "Constructii"
+                });
+
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 2,
+                    Name = "Agricultura"
+                });
+
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 3,
+                    Name = "Logistica"
+                });
+
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 4,
+                    Name = "IT"
+                });
+
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 5,
+                    Name = "Contabilitate"
+                });
+
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 6,
+                    Name = "Consultanta"
+                });
+
+                db.Domains.Add(new Domain
+                {
+                    DomainId = 7,
+                    Name = "Juridic"
+                });
+
+                db.SaveChanges();
+            }
+        }
+
+        private void createDegrees()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var degreeList = (from degree in db.Degrees
+                              select degree
+                             ).ToList();
+
+            if (degreeList.Count == 0)
+            {
+                db.Degrees.Add(new Degree
+                {
+                    DegreeId = 1,
+                    Name = "Diploma de absolvire a invatamantului gimnazial"
+                });
+
+                db.Degrees.Add(new Degree
+                {
+                    DegreeId = 2,
+                    Name = "Diploma de absolvire a liceului "
+                });
+
+                db.Degrees.Add(new Degree
+                {
+                    DegreeId = 3,
+                    Name = "Diploma de bacalaureat"
+                });
+
+                db.Degrees.Add(new Degree
+                {
+                    DegreeId = 4,
+                    Name = "Diploma de licenta"
+                });
+
+                db.Degrees.Add(new Degree
+                {
+                    DegreeId = 5,
+                    Name = "Diploma de master"
+                });
+
+                db.Degrees.Add(new Degree
+                {
+                    DegreeId = 6,
+                    Name = "Diploma de doctor"
                 });
 
                 db.SaveChanges();

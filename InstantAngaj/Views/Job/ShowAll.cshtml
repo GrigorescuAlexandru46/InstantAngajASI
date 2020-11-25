@@ -3,47 +3,184 @@
     ViewBag.Title = "Lista tuturor joburilor";
 }
 
-<h2>@ViewBag.Title</h2>
+<br />
 <hr />
 
-@if (ViewBag.JobList.Count > 0)
-{
-    <div class="row">
-        <div class="list-group">
-            @foreach (var job in ViewBag.JobList)
-            {
-                <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="col-md-12">
-                                <h3 class="list-group-item-heading"><b>@job.Name</b></h3>
-                            </div>
-                            <div class="col-md-12">
-                                <h5 style="margin-left: 1%;"><b>Anunt oferit de: </b>@job.Employer.Name</h5>
-                            </div>
-                            <div class="col-md-12">
-                                <h5 style="margin-left: 1%; margin-top: 0;"><b>Locatie: </b>@job.City.Name</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-2" style="margin-top: 1.1%;" >
-                            @if (ViewBag.CandidateJobApplications[job])
-                            {
-                                <h3 class="text-success text-center">Ai aplicat</h3>
-                            }
-                            else
-                            {
-                                <h3 class="text-warning text-center">Nu ai aplicat</h3>
-                            }
-
-                        </div>
-                        <div class="col-md-1 col-md-offset-3" style="margin-top: 1.1%;">
-                            <span class="badge text-info"><br />Salariu<br /><br /><span class="text-warning">@job.Salary RON<br /> &nbsp;</span></span>
-                        </div>
-                    </div>
-                </a>
-            }
-        </div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
     </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Cauta job</h2>
+            </div>
+            <div class="col-md-12">
+                <h5>Foloseste campurile de mai jos pentru a gasi jobul ideal cat mai rapid</h5>
+            </div>
+        </div>
+        <br />
+        <br />
+        @using (Html.BeginForm("Search", "Job", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        @Html.Label("SearchCity", "Oras")
+                    </div>
+                    <div class="col-md-12">
+                        @Html.DropDownList("SearchCity", new SelectList(ViewBag.AllCities, "Value", "Text"), "Oricare", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        @Html.Label("SearchDomain", "Domeniu")
+                    </div>
+                    <div class="col-md-12">
+                        @Html.DropDownList("SearchDomain", new SelectList(ViewBag.AllDomains, "Value", "Text"), "Oricare", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        @Html.Label("SearchDegree", "Competenta")
+                    </div>
+                    <div class="col-md-12">
+                        @Html.DropDownList("SearchDegree", new SelectList(ViewBag.AllDegrees, "Value", "Text"), "Oricare", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-primary btn-block" value="Cauta" />
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+</div>
+
+<hr />
+<br />
+
+
+
+@if (ViewBag.AllJobList.Count > 0)
+{
+    if (ViewBag.RecommendedJobList.Count > 0)
+    {
+        <h2>Joburi recomandate</h2>
+        <h5>Joburi ale caror cerinte corespund cu datele tale</h5>
+        <hr />
+        <div class="row">
+            <div class="list-group">
+                @foreach (var job in ViewBag.RecommendedJobList)
+                {
+                    <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="col-md-12">
+                                    <h3 class="list-group-item-heading"><b>@job.Name</b></h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 style="margin-left: 1%; margin-top: 0;"><b>Domeniu: </b>@job.Domain.Name</h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 style="margin-left: 1%; margin-top: 0;"><b>Anunt oferit de: </b>@job.Employer.Name</h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 style="margin-left: 1%; margin-top: 0;"><b>Locatie: </b>@job.City.Name</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="margin-top: 1.8%;">
+                                @if (ViewBag.CandidateJobApplications[job])
+                                {
+                                    <h3 class="text-success text-center">Ai aplicat</h3>
+                                }
+                                else
+                                {
+                                    <h3 class="text-warning text-center">Nu ai aplicat</h3>
+                                }
+
+                            </div>
+                            <div class="col-md-1 col-md-offset-3" style="margin-top: 1.6%;">
+                                <span class="badge text-info"><br />Salariu<br /><br /><span class="text-warning">@job.Salary RON<br /> &nbsp;</span></span>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        if (ViewBag.RemainingJobList.Count == 0)
+        {
+            <h2>Alte joburi</h2>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Nu s-a gasit niciun alt job</h4>
+                </div>
+            </div>
+        }
+    }
+
+    if (ViewBag.RemainingJobList.Count > 0)
+    {
+        if (ViewBag.RecommendedJobList.Count > 0)
+        {
+            <h2>Alte joburi valabile</h2>
+        }
+        else
+        {
+            <h2>Toate joburile valabile</h2>
+        }
+        <hr />
+        <div class="row">
+            <div class="list-group">
+                @foreach (var job in ViewBag.RemainingJobList)
+                {
+                    <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="col-md-12">
+                                    <h3 class="list-group-item-heading"><b>@job.Name</b></h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 style="margin-left: 1%; margin-top: 0;"><b>Domeniu: </b>@job.Domain.Name</h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 style="margin-left: 1%; margin-top: 0;"><b>Anunt oferit de: </b>@job.Employer.Name</h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 style="margin-left: 1%; margin-top: 0;"><b>Locatie: </b>@job.City.Name</h5>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="margin-top: 1.8%;">
+                                @if (ViewBag.CandidateJobApplications[job])
+                                {
+                                    <h3 class="text-success text-center">Ai aplicat</h3>
+                                }
+                                else
+                                {
+                                    <h3 class="text-warning text-center">Nu ai aplicat</h3>
+                                }
+
+                            </div>
+                            <div class="col-md-1 col-md-offset-3" style="margin-top: 1.6%;">
+                                <span class="badge text-info"><br />Salariu<br /><br /><span class="text-warning">@job.Salary RON<br /> &nbsp;</span></span>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    }
+
+
 }
 else
 {

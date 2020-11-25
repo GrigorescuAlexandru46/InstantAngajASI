@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -177,6 +178,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Degree.cs" />
+    <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\Employer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Job.cs" />
@@ -248,6 +251,9 @@
     <Content Include="Views\Job\New.cshtml" />
     <Content Include="Views\Job\Show.cshtml" />
     <Content Include="Views\Job\ShowAll.cshtml" />
+    <Content Include="Views\Job\ShowCandidates.cshtml" />
+    <Content Include="Views\Candidate\Show.cshtml" />
+    <Content Include="Views\Job\Results.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

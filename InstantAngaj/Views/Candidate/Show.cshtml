@@ -1,0 +1,38 @@
+﻿@model InstantAngaj.Models.Candidate
+
+@{
+    ViewBag.Title = "Detalii candidat";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/Content/Images/border_show.png" style="max-width: 100%; opacity: 0.6; border: solid 1px gray" />
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1">
+            <h4><b>Nume:</b> @Model.LastName</h4>
+            <br />
+
+            <h4><b>Prenume:</b> @Model.FirstName</h4>
+            <br />
+
+            <h4><b>Oras:</b> @Model.City.Name</h4>
+            <br />
+
+            <h4><b>Domeniul preferat:</b> @Model.Domain.Name</h4>
+            <br />
+
+            <h4><b>Ultima competenta:</b> @Model.Degree.Name</h4>
+        </div>
+    </div>
+</div>
+

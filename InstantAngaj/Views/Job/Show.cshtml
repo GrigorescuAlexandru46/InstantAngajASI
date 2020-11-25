@@ -19,7 +19,19 @@
 
     <div class="row">
         <div class="col-md-11 col-md-offset-1">
+            <h4><b>Angajator:</b> @Model.Employer.Name</h4>
+            <br />
+
+            <h4><b>Descrierea angajatorului:</b> @Model.Employer.Description</h4>
+            <br />
+
+            <h4><b>Domeniu:</b> @Model.Domain.Name</h4>
+            <br />
+
             <h4><b>Post:</b> @Model.Name</h4>
+            <br />
+
+            <h4><b>Descrierea jobului:</b> @Model.Description</h4>
             <br />
 
             <h4><b>Oras:</b> @Model.City.Name</h4>
@@ -29,9 +41,16 @@
             <br />
 
             <h4><b>Experienta minima:</b> @Model.MinimumExperience</h4>
-            <br />
 
-            <h4><b>Descriere:</b> @Model.Description</h4>
+            @if (User.IsInRole("Employer"))
+            {
+                <br />
+
+                <h4><b>Numar candidati:</b> @Model.Candidates.Count</h4>
+                <br />
+
+                <a href="/Job/ShowCandidates/@Model.JobId" class="btn btn-lg btn-success">Vezi lista candidatilor</a>
+            }
         </div>
     </div>
 

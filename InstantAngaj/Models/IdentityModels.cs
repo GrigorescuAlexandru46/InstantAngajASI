@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -24,10 +25,19 @@ namespace InstantAngaj.Models
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Domain> Domains { get; set; }
+        public DbSet<Degree> Degrees { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public static ApplicationDbContext Create()

@@ -6,10 +6,10 @@ using System.Web;
 
 namespace InstantAngaj.Models
 {
-    public class City
+    public class Domain
     {
         [Key]
-        public int CityId { get; set; }
+        public int DomainId { get; set; }
 
         public string Name { get; set; }
 
