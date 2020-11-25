@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Lista tuturor joburilor mele";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@if (ViewBag.JobList.Count > 0)
+{
+    <div class="row">
+        <div class="list-group">
+            @foreach (var job in ViewBag.JobList)
+            {
+                <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
+                    <h4 class="list-group-item-heading">@job.Name</h4>
+                </a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Nu aveti niciun job creat.</h4>
+        </div>
+    </div>
+}
+

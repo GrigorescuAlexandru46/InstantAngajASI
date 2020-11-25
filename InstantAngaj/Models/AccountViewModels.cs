@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace InstantAngaj.Models
@@ -55,10 +56,10 @@ namespace InstantAngaj.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Salveaza datele de logare")]
         public bool RememberMe { get; set; }
     }
 
@@ -72,13 +73,40 @@ namespace InstantAngaj.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Parola")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirmare parola")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        //
+        [Required]
+        [Display(Name = "Tip de utilizator")]
+        public string UserType { get; set; }
+
+        //
+        [Display(Name = "Prenume")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Nume")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Data de nastere")]
+        public string BirthDate { get; set; }
+
+        [Display(Name = "Numar de telefon")]
+        public string PhoneNumber { get; set; }
+
+        //
+        [Display(Name = "Numele angajatorului")]
+        public string EmployerName { get; set; }
+
+        [Display(Name = "O scurta descriere")]
+        public string EmployerDescription { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

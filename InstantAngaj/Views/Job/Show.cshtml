@@ -1,0 +1,65 @@
+﻿@model InstantAngaj.Models.Job
+
+@{
+    ViewBag.Title = "Detalii job";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/Content/Images/border_show.png" style="max-width: 100%; opacity: 0.6; border: solid 1px gray" />
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1">
+            <h4><b>Post:</b> @Model.Name</h4>
+            <br />
+
+            <h4><b>Oras:</b> @Model.City.Name</h4>
+            <br />
+
+            <h4><b>Salariu:</b> @Model.Salary RON</h4>
+            <br />
+
+            <h4><b>Experienta minima:</b> @Model.MinimumExperience</h4>
+            <br />
+
+            <h4><b>Descriere:</b> @Model.Description</h4>
+        </div>
+    </div>
+
+    @if (User.IsInRole("Candidate"))
+    {
+        <hr />
+        <br />
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                @if (ViewBag.CandidateHasApplied)
+                {
+                    using (Html.BeginForm("RemoveCandidate", "Job", new { id = Model.JobId }, FormMethod.Post, null))
+                    {
+                        <button type="submit" class="btn btn-danger btn-lg btn-block">Renunta</button>
+                    }
+                }
+
+                else
+                {
+                    using (Html.BeginForm("AddCandidate", "Job", new { id = Model.JobId }, FormMethod.Post, null))
+                    {
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Aplica</button>
+                    }
+                }
+            </div>
+        </div>
+    }
+
+
+</div>
+

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InstantAngaj.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace InstantAngaj.Controllers
 {
@@ -151,19 +152,46 @@ namespace InstantAngaj.Controllers
         {
             if (ModelState.IsValid)
             {
+                ApplicationDbContext db = new ApplicationDbContext();
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                string role = "";
+
+                if (model.UserType == "candidate")
+                {
+                    var candidate = new Candidate();
+                    candidate.UserId = user.Id;
+                    candidate.FirstName = model.FirstName;
+                    candidate.LastName = model.LastName;
+                    candidate.BirthDate = model.BirthDate;
+                    candidate.PhoneNumber = model.PhoneNumber;
+
+                    role = "Candidate";
+
+                    db.Candidates.Add(candidate);
+                    db.SaveChanges();
+                }
+                else if (model.UserType == "employer")
+                {
+                    var employer = new Employer();
+                    employer.UserId = user.Id;
+                    employer.Name = model.EmployerName;
+                    employer.Description = model.EmployerDescription;
+
+                    role = "Employer";
+
+                    db.Employers.Add(employer);
+                    db.SaveChanges();
+                }
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    UserManager.AddToRole(user.Id, role);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }

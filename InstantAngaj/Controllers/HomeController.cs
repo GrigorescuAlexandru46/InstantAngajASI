@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InstantAngaj.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,11 @@ namespace InstantAngaj.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData.ContainsKey("Message"))
+            {
+                ViewBag.Message = TempData["Message"].ToString();
+            }
+
             return View();
         }
 

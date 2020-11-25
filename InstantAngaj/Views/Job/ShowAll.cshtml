@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Lista tuturor joburilor";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@if (ViewBag.JobList.Count > 0)
+{
+    <div class="row">
+        <div class="list-group">
+            @foreach (var job in ViewBag.JobList)
+            {
+                <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="col-md-12">
+                                <h3 class="list-group-item-heading"><b>@job.Name</b></h3>
+                            </div>
+                            <div class="col-md-12">
+                                <h5 style="margin-left: 1%;"><b>Anunt oferit de: </b>@job.Employer.Name</h5>
+                            </div>
+                            <div class="col-md-12">
+                                <h5 style="margin-left: 1%; margin-top: 0;"><b>Locatie: </b>@job.City.Name</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-2" style="margin-top: 1.1%;" >
+                            @if (ViewBag.CandidateJobApplications[job])
+                            {
+                                <h3 class="text-success text-center">Ai aplicat</h3>
+                            }
+                            else
+                            {
+                                <h3 class="text-warning text-center">Nu ai aplicat</h3>
+                            }
+
+                        </div>
+                        <div class="col-md-1 col-md-offset-3" style="margin-top: 1.1%;">
+                            <span class="badge text-info"><br />Salariu<br /><br /><span class="text-warning">@job.Salary RON<br /> &nbsp;</span></span>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Nu s-a gasit niciun job</h4>
+        </div>
+    </div>
+}
+

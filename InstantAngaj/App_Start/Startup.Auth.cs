@@ -63,6 +63,8 @@ namespace InstantAngaj
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
         }
     }
 }

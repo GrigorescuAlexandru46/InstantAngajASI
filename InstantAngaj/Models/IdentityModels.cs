@@ -20,6 +20,11 @@ namespace InstantAngaj.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<Employer> Employers { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<City> Cities { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
