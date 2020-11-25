@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
+    <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -254,6 +255,7 @@
     <Content Include="Views\Job\ShowCandidates.cshtml" />
     <Content Include="Views\Candidate\Show.cshtml" />
     <Content Include="Views\Job\Results.cshtml" />
+    <Content Include="Views\Employer\Show.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

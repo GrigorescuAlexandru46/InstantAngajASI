@@ -1,0 +1,32 @@
+﻿@model InstantAngaj.Models.Employer
+
+@{
+    ViewBag.Title = "Detalii angajator";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/Content/Images/border_show.png" style="max-width: 100%; opacity: 0.6; border: solid 1px gray" />
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-11 col-md-offset-1">
+            <h4><b>Nume angajator:</b> @Model.Name</h4>
+            <br />
+
+            <h4><b>Descriere:</b> @Model.Description</h4>
+            <br />
+
+            <h4><b>Nr de anunturi joburi:</b> @Model.Jobs.Count</h4>
+        </div>
+    </div>
+</div>
+

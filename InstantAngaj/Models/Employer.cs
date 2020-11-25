@@ -16,5 +16,7 @@ namespace InstantAngaj.Models
         public string Description { get; set; }
 
         public string UserId { get; set; }
+
+        public virtual ICollection<Job> Jobs { get; set; }
     }
 }

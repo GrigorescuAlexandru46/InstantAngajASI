@@ -102,7 +102,7 @@ namespace InstantAngaj.Models
         [Display(Name = "Oras")]
         public int CityId { get; set; }
 
-        [Display(Name = "Domeniul")]
+        [Display(Name = "Domeniul preferat")]
         public int DomainId { get; set; }
 
         [Display(Name = "Ultima competenta")]
