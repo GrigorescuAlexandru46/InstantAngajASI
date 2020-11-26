@@ -82,7 +82,23 @@ namespace InstantAngaj.Controllers
         {
             Job job = db.Jobs.Find(id);
 
+            Dictionary<Candidate, bool> isIdealCandidateMap = new Dictionary<Candidate, bool>();
+            foreach (Candidate candidate in job.Candidates)
+            {
+                isIdealCandidateMap.Add(candidate, candidate.CityId == job.CityId && candidate.DomainId == job.DomainId && candidate.DegreeId == job.DegreeId);
+            }
+
             ViewBag.CandidateList = job.Candidates;
+            ViewBag.IsIdealCandidateMap = isIdealCandidateMap;
+
+            return View();
+        }
+
+        public ActionResult ShowApplications()
+        {
+            ICollection<Job> appliedJobList = GetCandidate().Jobs;
+
+            ViewBag.AppliedJobList = appliedJobList;
 
             return View();
         }

@@ -1,6 +1,5 @@
 ﻿
 @{
-    int indexCandidate = 1;
     ViewBag.Title = "Lista tuturor candidatilor";
 }
 
@@ -16,11 +15,25 @@
                 <a href="/Candidate/Show/@candidate.CandidateId" class="list-group-item col-md-12">
                     <div class="row">
                         <div class="col-md-5">
-                            <h3><b>@indexCandidate. &nbsp;&nbsp; @candidate.FirstName @candidate.LastName</b></h3>
+                            <div class="col-md-12">
+                                <h3><b>@candidate.FirstName @candidate.LastName</b></h3>
+                            </div>
+                            <div class="col-md-12">
+                                <h5 style="margin: 0;"><b>Domeniul preferat: </b>@candidate.Domain.Name</h5>
+                            </div>
+                            <div class="col-md-12">
+                                <h5 style="margin: 0;"><b>Oras: </b>@candidate.City.Name</h5>
+                            </div>
                         </div>
-                        <div class="col-md-3" >
+                        <div class="col-md-3" style="margin-top: 1%;" >
                             <h3 class="text-center text-success">@candidate.PhoneNumber</h3>
                         </div>
+                        @if (ViewBag.IsIdealCandidateMap[candidate])
+                        {
+                            <div class="col-md-4" style="margin-top: 1%;">
+                                <h3 class="text-center text-warning">IDEAL</h3>
+                            </div>
+                        }
                     </div>
                 </a>
             }

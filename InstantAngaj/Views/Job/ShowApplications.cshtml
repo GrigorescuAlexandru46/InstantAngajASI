@@ -1,16 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "Lista tuturor joburilor mele";
+    ViewBag.Title = "Lista tuturor joburilor pentru care ai aplicat";
 }
 
 <h2>@ViewBag.Title</h2>
 <hr />
 
-@if (ViewBag.JobList.Count > 0)
+@if (ViewBag.AppliedJobList.Count > 0)
 {
     <div class="row">
         <div class="list-group">
-            @foreach (var job in ViewBag.JobList)
+            @foreach (var job in ViewBag.AppliedJobList)
             {
                 <a href="/Job/Show/@job.JobId" class="list-group-item col-md-12">
                     <div class="row">
@@ -22,9 +22,6 @@
                                 <h5 style="margin: 0;">Domeniul @job.Domain.Name, @job.City.Name</h5>
                             </div>
                         </div>
-                        <div class="col-md-2" style="margin-top: 0.5%">
-                            <h4 class="text-center text-success"><b>Nr candidati: </b><span class="text-warning">@job.Candidates.Count</span></h4>
-                        </div>
                     </div>
                 </a>
             }
@@ -35,7 +32,7 @@ else
 {
     <div class="row">
         <div class="col-md-12">
-            <h4>Nu aveti niciun job creat.</h4>
+            <h4>Nu ai aplicat pentru niciun job.</h4>
         </div>
     </div>
 }

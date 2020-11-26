@@ -256,6 +256,7 @@
     <Content Include="Views\Candidate\Show.cshtml" />
     <Content Include="Views\Job\Results.cshtml" />
     <Content Include="Views\Employer\Show.cshtml" />
+    <Content Include="Views\Job\ShowApplications.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
